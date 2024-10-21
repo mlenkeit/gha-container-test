@@ -1,0 +1,24 @@
+name: Demo container usage
+on:
+  workflow_dispatch: # manual trigger
+
+jobs:
+  without-container:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Print workspace path
+        run: |
+          echo "${{ github.workspace }}"
+  with-container:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/puppeteer/puppeteer:latest
+      options: '-i --init --cap-add=SYS_ADMIN -u root'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Print workspace path
+        run: |
+          echo "${{ github.workspace }}"
